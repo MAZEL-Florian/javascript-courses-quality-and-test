@@ -6,6 +6,8 @@
 
 <!-- UIkit JS -->
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.10.1/dist/js/uikit.min.js"></script>
+<script src="uikit/dist/js/uikit-icons.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.10.1/dist/js/uikit-icons.min.js"></script>
 
 <style>
@@ -18,7 +20,62 @@
         color: aliceblue;
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
         color: aliceblue;
+    }
+
+    .main-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 40px;
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    .score-container {
+        width: 35%;
+    }
+
+    .game-container {
+        width: 55%;
+        max-width: 600px;
+    }
+
+    .table-container {
+        height: 600px;
+        overflow-y: auto;
+    }
+
+    .table-container thead {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .score-container,
+    .game-container {
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #1c252b;
+        border-radius: 8px;
     }
 </style>

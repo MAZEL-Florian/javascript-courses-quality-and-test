@@ -2,9 +2,9 @@
   "name": "hangman-game",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "test": "jest --coverage"
   },
   "author": "",
@@ -13,7 +13,9 @@
     "csv-parser": "^3.0.0",
     "dotenv": "^15.0.0",
     "ejs": "^3.1.6",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-session": "^1.18.1",
+    "supertest": "^7.0.0"
   },
   "devDependencies": {
     "jest": "^29.7.0"

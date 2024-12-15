@@ -1,43 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <%- include('../partials/head'); %>
-</head>
+<html lang="fr">
 
-<body class="container">
+    <head>
+        <%- include('../partials/head'); %>
+    </head>
 
-<main>
-
-    <h1>❓</span> Le jeu du pendu ❓</h1>
-    <p>Essayer de deviner le mot !</p>
-
-    <form action="/" method="post">
-        <fieldset class="uk-fieldset">
-
-            <legend class="uk-legend">Nombre d'essai restant : <%= numberOfTries %></legend>
-
-            <div class="uk-margin">
-                <input class="uk-input" type="text" name="word" placeholder="Tapez une lettre">
+    <body class="container">
+        <main class="main-container">
+            <div class="score-container">
+                <h3>📜 Règles du jeu 📜</h3>
+                <ul class="uk-list uk-list-bullet">
+                    <li>Le mot à deviner est choisi aléatoirement parmi l'intégralité des mots du dictionnaire français.</li>
+                    <li>Le mot est réinitialisé tous les jours à minuit (heure française).</li>
+                    <li>Vous disposez de <strong>5 essais</strong> pour deviner le mot.</li>
+                    <li>Vous démarrez chaque partie avec un score de <strong>1000 points</strong>.</li>
+                    <li>Chaque seconde écoulée, vous perdez <strong>1 point</strong>.</li>
+                    <li>Chaque mauvaise lettre ajoutée coûte <strong>50 points</strong>.</li>
+                    <li>Essayez de deviner le mot avec le moins d'erreurs possible pour maximiser votre score !</li>
+                </ul>
             </div>
+            <div class="">
+                <h1>🔎 Pendutix ❓</h1>
+                <p>Essaye de deviner le mot !</p>
+                <% if(!hasWon && !hasLost) { %>
+                    <form action="/" method="post">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">Nombre d'essais restant : <%= numberOfTries %></legend>
+                            <legend class="uk-legend">
+                                Score :
+                                <span id="score">
+                                    <%= score %>
+                                </span>
+                            </legend>
 
-            <div class="uk-margin">
-                <button class="uk-input uk-button-danger uk-form-width-medium" type="submit" name="reset" value="true">Reset</button>
-                <button class="uk-input uk-button-secondary uk-form-width-medium" type="submit" value="form-success">Tester</button>
+                            <div class="uk-form-custom uk-flex">
+                                <input class="uk-input" type="text" name="word" autofocus placeholder="Tapez une lettre"
+                                    <%=hasWon || hasLost ? 'disabled' : '' %> >
+                                <button class="uk-input uk-button-secondary uk-form-width-medium" type="submit"
+                                    value="form-success" <%=hasWon || hasLost ? 'disabled' : '' %> >Envoyer</button>
+                            </div>
+
+                            <% if (errorMessage) { %>
+                                <p class="uk-animation-shake" style="color: red;">
+                                    <%= errorMessage %>
+                                </p>
+                            <% } %>
+                        </fieldset>
+                    </form>
+                <% } %>
+                <% if (game) { %>
+                    <h3>Votre mot : <%= game %></h3>
+                <% } %>
+                <% if (guessedLetters) { %>
+                    <h3>Lettres choisies : <%= guessedLetters %></h3>
+                <% } %>
+
+                <% if (hasWon) { %>
+                    <div class="uk-animation-slide-top-medium uk-card uk-card-default uk-card-body uk-margin-top uk-alert-success uk-border-rounded"
+                        style="background-color: green;">
+                        <h3>🎉 Félicitations ! 🎉<br> Vous avez trouvé le mot : <%= word %> !
+                            <br>Revenez demain pour un nouveau mot !
+                        </h3>
+                        <p>Votre score est de : <%= score %> points avec <%= wrongGuesses %> erreur(s).</p>
+                        <% if (showPseudoInput) { %>
+                            <div class="uk-margin" id="pseudoForm">
+                                <input class="uk-input" type="text" id="pseudoInput"
+                                    placeholder="Entrez votre pseudo">
+                                <div class="uk-margin">
+                                    <button class="uk-input uk-button-primary uk-form-width-medium"
+                                        id="saveScoreBtn">Enregistrer le score</button>
+                                </div>
+                            </div>
+                        <% } %>
+                        <button id="shareScoreBtn" class="uk-button uk-button-primary">Partager</button>
+                        <a href="https://x.com/intent/tweet?text=🎉 J'ai gagné au jeu du pendu avec un score de <%= score %> points et seulement <%= wrongGuesses %> erreurs ! 💪 Pouvez-vous faire mieux ?"
+                            target="_blank" class="uk-button uk-button-primary"
+                            uk-icon="icon: twitter">
+                        </a>
+                        <p id="shareMessage" style="display: none;">Copié dans le presse-papier !</p>
+                    </div>
+                <% } %>
+                <% if (hasLost) { %>
+                    <div class="uk-animation-slide-top-medium uk-card uk-card-default uk-card-body uk-margin-top uk-alert-success uk-border-rounded"
+                        style="background-color: rgb(228, 61, 61);">
+                        <h3>😭 Perdu ! 😭<br> Le mot était : <%= word %>
+                                <br>Revenez demain pour un nouveau mot !
+                        </h3>
+                    </div>
+                <% } %>
             </div>
+            <div>
+                <% if (topScores && topScores.length> 0 && (hasWon || hasLost)) { %>
+                    <div class="uk-animation-slide-left-medium">
+                        <h3>Top 1000 scores pour ce mot du jour</h3>
+                        <div class="table-container">
+                            <table class="uk-table uk-table-divider" id="scoreTable">
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        <th>Pseudo</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% topScores.forEach((score, index)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= score.pseudo %>
+                                            </td>
+                                            <td>
+                                                <%= score.score %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </main>
 
-        </fieldset>
-    </form>
 
-    <% if (game) { %>
-       <h3>Votre mot : <%= game %></h3>
-    <% } %>
+        <script>
+            let intervalId;
+            const hasWon = <%= JSON.stringify(hasWon) %>;
+            const hasLost = <%= JSON.stringify(hasLost) %>;
+        
+            async function updateScoreDisplay() {
+                try {
+                    const response = await fetch('/updateScore');
+                    const data = await response.json();
+        
+                    if (data.end) {
+                        clearInterval(intervalId);
+                        return;
+                    }
+        
+                    document.getElementById('score').textContent = data.score;
+                } catch (error) {
+                    console.error("Erreur lors de la mise à jour du score :", error);
+                }
+            }
+        
+            intervalId = setInterval(updateScoreDisplay, 1000);
+        
+            document.getElementById('saveScoreBtn')?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const pseudo = document.getElementById('pseudoInput').value.trim();
+            const response = await fetch('/saveScore', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo }),
+            });
 
-    <% if (numberOfTries <= 0) { %>
-        <h3>Le mot était : <%= word %></h3>
-    <% } %>
+            const data = await response.json();
+            if (data.error) {
+                alert(data.error);
+            } else {
+                window.location.reload();
+            }
+        });
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const shareMessage = document.getElementById('shareMessage');
+                shareMessage.style.display = 'block';
+                shareMessage.textContent = "Copié dans le presse-papier !";
 
+                setTimeout(() => {
+                    shareMessage.style.display = 'none';
+                }, 2000);
+            } catch (error) {
+                console.error("Erreur lors de la copie dans le presse-papier :", error);
+            }
+        }
 
-</main>
+        document.getElementById('shareScoreBtn')?.addEventListener('click', () => {
+            const message = `J'ai gagné au jeu du pendu avec un score de <%= score %> points et seulement <%= wrongGuesses %> erreurs ! 💪 Pouvez-vous faire mieux ?`;
+            copyToClipboard(message);
+        });
 
-</body>
+        </script>
+    </body>
 </html>

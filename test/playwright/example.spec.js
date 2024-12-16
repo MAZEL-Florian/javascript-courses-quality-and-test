@@ -35,7 +35,7 @@ test('displays the rules of the game', async ({ page }) => {
   await expect(rules).toHaveText('📜 Règles du jeu 📜');
 
   const ruleItems = page.locator('.score-container ul li');
-  await expect(ruleItems).toHaveCount(7); // Vérifie que toutes les règles sont listées
+  await expect(ruleItems).toHaveCount(7);
 });
 
 test('starts with 5 tries and 1000 points', async ({ page }) => {
@@ -58,7 +58,7 @@ test('updates the word display when a correct letter is guessed', async ({ page 
   await form.press('Enter');
 
   const guessedWord = page.locator('h3:has-text("Votre mot :")');
-  await expect(guessedWord).not.toHaveText(/####/); // Vérifie que le mot affiché évolue
+  await expect(guessedWord).not.toHaveText(/####/);
 });
 
 test('reduces the number of tries on a wrong guess', async ({ page }) => {
@@ -68,7 +68,7 @@ test('reduces the number of tries on a wrong guess', async ({ page }) => {
   const form = page.locator('form');
 
   const numberOfTries = page.locator('legend:has-text("Nombre d\'essais restant")');
-  await input.fill('z'); // Une lettre incorrecte
+  await input.fill('z');
   await form.press('Enter');
 
   await expect(numberOfTries).toContainText('Nombre d\'essais restant : 4');
@@ -77,7 +77,6 @@ test('reduces the number of tries on a wrong guess', async ({ page }) => {
 test('shows winning message when the word is guessed', async ({ page }) => {
   await page.goto('http://localhost:3030/');
 
-  // Simule une séquence pour deviner un mot
   const input = page.locator('input[name="word"]');
   const form = page.locator('form');
 

@@ -51,14 +51,11 @@ Devinez le mot du jour avec le moins d'erreurs possibles et le plus rapidement p
 
 ```bash
 # Clonez le dépôt
-git clone https://github.com/votre-username/pendutix.git
-cd pendutix
+git clone https://github.com/MAZEL-Florian/javascript-courses-quality-and-test.git
+cd javascript-courses-quality-and-test
 
 # Installez les dépendances
 npm install
-
-# Configurez les variables d'environnement
-cp .env.example .env
 
 # Lancez le serveur
 npm start
@@ -77,17 +74,8 @@ npm start
 ## 🚧 Roadmap
 
 - [ ] Mode multijoueurs
-- [ ] Support international
-- [ ] Personnalisation des difficultés
 - [ ] Intégration de nouveaux dictionnaires
 
-## 🤝 Contribution
-
-1. Forkez le projet
-2. Créez une branche de fonctionnalité
-3. Commitez vos modifications
-4. Poussez votre branche
-5. Ouvrez une Pull Request
 
 ## 📜 Licence
 

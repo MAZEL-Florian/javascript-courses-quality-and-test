@@ -44,7 +44,6 @@ Devinez le mot du jour avec le moins d'erreurs possibles et le plus rapidement p
 - Node.js
 - Express.js
 - EJS (Templating)
-- UIkit (Frontend Framework)
 - JavaScript côté client
 
 ## 🚀 Installation

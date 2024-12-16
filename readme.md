@@ -1,39 +1,98 @@
-# Hangman Game
+# 🔎 Pendutix 📜 - Jeu du Pendu Quotidien
 
-This is a small project to build a classic Hangman game in JavaScript.
-The primary goal of this project is to practice and learn how to write tests using various tools and frameworks, including Jest.
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![Express](https://img.shields.io/badge/Express-4.x-green)
+![EJS](https://img.shields.io/badge/EJS-Templating-red)
+![Daily Challenge](https://img.shields.io/badge/Daily-Challenge-blue)
 
-**Test-Driven Development:** The project is structured to encourage writing tests for each feature of the game.
+## 📝 Description du Projet
 
-## Getting Started
+Pendutix est un jeu du pendu quotidien unique qui défie votre vocabulaire français et votre rapidité. Chaque jour à minuit, un nouveau mot est généré aléatoirement à partir du dictionnaire français, vous invitant à un défi linguistique renouvelé.
 
-### Running the Game
+### 🎯 Caractéristiques Uniques
 
-To start the game, copy and paste the .env.example file to .env and set the PORT variable to 3030.
+- 🇫🇷 Mots 100% français
+- 🕰️ Mot renouvelé quotidiennement à minuit
+- 🏆 Système de score dynamique et compétitif
+- 📊 Tableau des meilleurs scores
+- 🌐 Partage de résultats sur les réseaux sociaux
 
-Then use the following command:
+## 🎮 Règles du Jeu
+
+### 🌟 Objectif
+Devinez le mot du jour avec le moins d'erreurs possibles et le plus rapidement possible !
+
+### 🎲 Règles Détaillées
+
+- Le mot est choisi **aléatoirement** dans le dictionnaire français
+- **5 essais maximum** pour deviner le mot
+- Démarrez avec un **score initial de 1000 points**
+- Système de scoring unique :
+  - **-1 point par seconde** écoulée
+  - **-50 points** pour chaque mauvaise lettre
+  - L'objectif : maximiser votre score !
+
+### 🏅 Score et Classement
+
+- Score initial : 1000 points
+- Perdez 1 point chaque seconde
+- Chaque erreur de lettre coûte 50 points
+- Votre score final dépend de votre rapidité et précision
+
+## 🛠 Technologies
+
+- Node.js
+- Express.js
+- EJS (Templating)
+- UIkit (Frontend Framework)
+- JavaScript côté client
+
+## 🚀 Installation
 
 ```bash
+# Clonez le dépôt
+git clone https://github.com/votre-username/pendutix.git
+cd pendutix
+
+# Installez les dépendances
+npm install
+
+# Configurez les variables d'environnement
+cp .env.example .env
+
+# Lancez le serveur
 npm start
 ```
 
-This will start the server, and you can play the game by visiting `http://localhost:3030` in your browser.
+🌐 Accédez au jeu : [http://localhost:3030](http://localhost:3030)
 
-### Running Tests
 
-This project uses Jest for testing. To run the tests, use the following command:
+## ✨ Fonctionnalités Additionnelles
 
-```bash
-npm test
-```
+- 🏆 Système de classement des meilleurs scores
+- 📱 Interface responsive
+- 🐦 Partage de score sur Twitter
+- 📋 Copie du score dans le presse-papier
 
-The tests are designed to ensure that the game logic works correctly and to demonstrate best practices in test-driven development.
+## 🚧 Roadmap
 
-## Project Structure
+- [ ] Mode multijoueurs
+- [ ] Support international
+- [ ] Personnalisation des difficultés
+- [ ] Intégration de nouveaux dictionnaires
 
-- **`game.js`**: Contains the core game logic.
-- **`tools.js`**: Utility functions used in the game.
-- **`test/`**: Contains test files for each module (e.g., `game.test.js`, `tools.test.js`).
-- **`index.js`**: Main server file that sets up the Express app and routes.
-- **`public/`**: Static files such as HTML, CSS, and client-side JavaScript.
-- **`views/`**: EJS templates used to render the game interface.
+## 🤝 Contribution
+
+1. Forkez le projet
+2. Créez une branche de fonctionnalité
+3. Commitez vos modifications
+4. Poussez votre branche
+5. Ouvrez une Pull Request
+
+## 📜 Licence
+
+Distribué sous licence MIT.
+
+---
+
+**⭐ Relevez le défi quotidien de Pendutix !**

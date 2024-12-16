@@ -1,0 +1,41 @@
+name: Test
+concurrency: production
+
+on:
+  push:
+    branches: [ playwright ]
+  pull_request:
+    branches: [ playwright ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm' # Cache npm dependencies
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run serv
+        run: npm start
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+
+      - name: Display test results
+        if: failure() # This step runs only if the tests fail
+        run: cat ./test-results.txt || echo "No test results file found"

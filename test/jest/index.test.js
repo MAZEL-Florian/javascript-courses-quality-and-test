@@ -1,7 +1,7 @@
 
 const request = require('supertest');
-const app = require('../index');
-const Game = require('../game.js');
+const app = require('../../index');
+const Game = require('../../game.js');
 
 beforeAll(async () => {
     await Game.loadWords();

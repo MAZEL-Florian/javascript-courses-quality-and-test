@@ -1,10 +1,8 @@
-name: Test
+name: Hangman Game CI/CD
 
 on:
   push:
-    branches: [ playwright ]
-  pull_request:
-    branches: [ playwright ]
+    branches: [playwright]
 
 jobs:
   test:
@@ -26,18 +24,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Run serv
-        run: npm start & sleep 5
-
       - name: Run unit tests
         run: npm run test:unit
 
-      - name: Run e2e tests
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Start application in background
+        run: |
+          npm start &
+          sleep 5
+
+      - name: Run E2E tests
         run: npm run test:e2e
 
-      - name: Display test results
-        if: failure() # This step runs only if the tests fail
-        run: cat ./test-results.txt || echo "No test results file found"
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            coverage/
+            playwright-report/
+          retention-days: 30

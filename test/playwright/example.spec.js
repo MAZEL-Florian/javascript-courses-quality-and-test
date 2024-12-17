@@ -91,3 +91,12 @@ test('shows winning message when the word is guessed', async ({ page }) => {
   const winningMessage = page.locator('.uk-alert-success');
   await expect(winningMessage).toContainText('🎉 Félicitations ! 🎉');
 });
+
+test('checks Node.js version', async () => {
+  const expectedVersion = '18.12.1';
+  
+  const actualVersion = process.version.replace('v', '');
+  console.log(`Current Node.js version: ${actualVersion}`);
+
+  expect(actualVersion).toBe(expectedVersion);
+});

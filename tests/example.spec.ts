@@ -56,9 +56,8 @@ test('updates the word display when a correct letter is guessed', async ({ page 
   await input.fill('e');
   await form.press('Enter');
 
-  // Attendre que le mot soit mis à jour
   const guessedWord = page.locator('h3:has-text("Votre mot :")');
-  await expect(guessedWord).toHaveText(/e/); // On attend au moins une lettre 'e'
+  await expect(guessedWord).toHaveText(/e/); 
 });
 
 test('reduces the number of tries on a wrong guess', async ({ page }) => {
@@ -71,7 +70,6 @@ test('reduces the number of tries on a wrong guess', async ({ page }) => {
   await input.fill('z');
   await form.press('Enter');
 
-  // Attendre la mise à jour des essais
   await numberOfTries.waitFor();
   await expect(numberOfTries).toContainText('Nombre d\'essais restant : 4');
 });

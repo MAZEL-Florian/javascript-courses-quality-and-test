@@ -1,25 +1,4 @@
-// @ts-check
-const { test, expect } = require('@playwright/test');
-const { spawn } = require('child_process');
-
-let serverProcess;
-
-test.beforeAll(async () => {
-  console.log('Starting server...');
-  serverProcess = spawn('npm start', {
-    stdio: 'inherit',
-    shell: true,
-  });
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-});
-
-test.afterAll(() => {
-  console.log('Stopping server...');
-  if (serverProcess) {
-    serverProcess.kill();
-  }
-});
+import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
   await page.goto('http://localhost:3030/');

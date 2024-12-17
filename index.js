@@ -3,10 +3,10 @@ const express = require('express');
 const path = require('path');
 const Game = require('./game.js');
 
-const PORT = process.env.PORT || 3030;
+// const PORT = process.env.PORT || 3030;
 
 const app = express();
-const game = new Game();
+// const game = new Game();
 const session = require('express-session');
 
 app.use(session({
@@ -37,7 +37,7 @@ function sortAndLimitScores() {
     scoresTable = scoresTable.slice(0, 1000);
 }
 
-let scoreAlreadySaved = false;
+// let scoreAlreadySaved = false;
 app.post('/addTestData', (req, res) => {
     const { pseudo, score } = req.body;
 
@@ -92,8 +92,8 @@ app.get('/updateScore', (req, res) => {
     }
 
     const game = Game.fromJSON(req.session.gameData);
-    const hasWon = game.hasWon();
-    const hasLost = game.hasLost();
+    // const hasWon = game.hasWon();
+    // const hasLost = game.hasLost();
 
     game.updateScoreWithTime();
     req.session.gameData = game.toJSON();
